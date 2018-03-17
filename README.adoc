@@ -1,0 +1,38 @@
+:chapter-label:
+:icons: font
+:lang: en
+:sectanchors:
+:sectnums:
+:sectnumlevels: 3
+:source-highlighter: highlightjs
+:toc:
+:toclevels: 1
+
+:author: isuke
+:email: isuke770@gmail.com
+
+= Electron + vue.js template
+
+== Install
+
+This is a project template for https://github.com/vuejs/vue-cli[vue-cli].
+
+----
+$ yarn global add vue-cli
+
+$ vue init isuke/vuejs-electron-template my-project
+$ cd my-project
+$ yarn install
+----
+
+== Develop
+
+----
+$ yarn run dev
+----
+
+== Build
+
+----
+$ yarn run build
+----

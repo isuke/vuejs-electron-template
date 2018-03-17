@@ -1,0 +1,39 @@
+{
+  "comments": false,
+  "env": {
+    "main": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": 7
+            }
+          }
+        ]
+      ]
+    },
+    "renderer": {
+      "presets": [
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    },
+    "test": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": 7
+            }
+          }
+        ]
+      ]
+    }
+  }
+}

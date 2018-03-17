@@ -1,0 +1,94 @@
+{
+  "name": "{{ name }}",
+  "description": "{{ description }}",
+  "version": "0.0.1",
+  "author": "{{ author }}",
+  "license": "{{ license }}",
+  "private": true,
+  "main": "./dist/main.js",
+  "scripts": {
+    "dev": "cat dev.coffee | coffee -sc | cross-env NODE_ENV=development node",
+    "pack:main": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=webpack.config.main.coffee",
+    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=webpack.config.renderer.coffee",
+    "pack:clean": "rm -rf dist",
+    "prepack": "yarn run pack:clean",
+    "pack": "yarn run pack:main && yarn run pack:renderer",
+    "prebuild": "yarn run pack",
+    "build": "cat build.coffee | coffee -sc | cross-env node",
+    "test:unit": "cross-env NODE_ENV=test mocha-webpack --webpack-config=webpack.config.renderer.js --require=spec/unit/setup.js spec/unit/**/*.spec.coffee",
+    "test": "yarn run test:unit",
+    "lint:template": "pug-lint-vue src/renderer",
+    "lint": "yarn run lint:template"
+  },
+  "dependencies": {
+    "axios": "0.x.x",
+    "lodash": "4.x.x",
+    "vue": "2.x.x",
+    "vue-router": "3.x.x"
+  },
+  "devDependencies": {
+    {{#if unitTest}}
+    "@vue/test-utils": "latest",
+    {{/if}}
+    "autoprefixer": "latest",
+    "babel-core": "latest",
+    "babel-loader": "latest",
+    "babel-preset-env": "latest",
+    "coffee-loader": "latest",
+    "coffeescript": "latest",
+    "cross-env": "latest",
+    "css-loader": "latest",
+    "devtron": "latest",
+    "electron": "1.x.x",
+    "electron-builder": "20.x.x",
+    "electron-devtools-installer": "2.x.x",
+    {{#if unitTest}}
+    "expect": "latest",
+    {{/if}}
+    "file-loader": "latest",
+    "html-webpack-plugin": "latest",
+    {{#if_eq altCss "scss"}}
+    "import-glob-loader": "latest",
+    "node-sass": "latest",
+    {{/if_eq}}
+    {{#if unitTest}}
+    "jsdom": "latest",
+    "jsdom-global": "latest",
+    "mocha": "latest",
+    "mocha-webpack": "latest",
+    {{/if}}
+    "postcss": "6.x.x",
+    "postcss-flexbugs-fixes": "latest",
+    "postcss-loader": "latest",
+    "pug": "latest",
+    "pug-lint": "latest",
+    "pug-lint-vue": "latest",
+    "pug-loader": "latest",
+    {{#if_eq altCss "scss"}}
+    "sass-loader": "latest",
+    "sass-resources-loader": "latest",
+    {{/if_eq}}
+    "style-loader": "latest",
+    {{#if_eq altCss "stylus"}}
+    "stylus": "latest",
+    "stylus-loader": "latest",
+    "stylus-resources-loader": "latest",
+    {{/if_eq}}
+    "tinyreset": "latest",
+    "vue-loader": "latest",
+    "vue-pug-lint-loader": "latest",
+    {{#if unitTest}}
+    "vue-server-renderer": "2.x.x",
+    {{/if}}
+    "vue-template-compiler": "latest",
+    "webpack": "3.x.x",
+    "webpack-dev-server": "2.x.x",
+    "webpack-hot-middleware": "2.x.x",
+    {{#if unitTest}}
+    "webpack-merge": "latest",
+    "webpack-node-externals": "latest"
+    {{else}}
+    "webpack-merge": "latest"
+    {{/if}}
+  }
+}

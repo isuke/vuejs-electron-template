@@ -34,8 +34,10 @@ else if process.env.NODE_ENV == 'development'
       publicPath: 'http://localhost:8080/'
     performance:
       hints: false
+{{#if_or unitTest e2eTest}}
 else if process.env.NODE_ENV == 'test'
   config = merge rendererConfig, {}
+{{/if_or}}
 else
   console.error "`#{process.env.NODE_ENV}` is not defined."
 

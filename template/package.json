@@ -15,8 +15,21 @@
     "pack": "yarn run pack:main && yarn run pack:renderer",
     "prebuild": "yarn run pack",
     "build": "cat build.coffee | coffee -sc | cross-env node",
+    {{#unitTest}}
     "test:unit": "cross-env NODE_ENV=test mocha-webpack --webpack-config=webpack.config.renderer.js --require=spec/unit/setup.js spec/unit/**/*.spec.coffee",
-    "test": "yarn run test:unit",
+    {{/unitTest}}
+    {{#e2eTest}}
+    "pretest:e2e": "yarn run pack",
+    "test:e2e": "cross-env NODE_ENV=test mocha-webpack --webpack-config=webpack.config.main.coffee --require=spec/e2e/setup.js spec/e2e/**/*.spec.coffee",
+    {{/e2eTest}}
+    {{#unitTest}}
+    "test": "{{#unitTest}}yarn run test:unit{{/unitTest}}{{#if_and unitTest e2eTest}} && {{/if_and}}{{#e2eTest}}yarn run test:e2e{{/e2eTest}}",
+    {{/unitTest}}
+    {{#e2eTest}}
+    {{#unless unitTest}}
+    "test": "{{#unitTest}}yarn run test:unit{{/unitTest}}{{#if_and unitTest e2eTest}} && {{/if_and}}{{#e2eTest}}yarn run test:e2e{{/e2eTest}}",
+    {{/unless}}
+    {{/e2eTest}}
     "lint:template": "pug-lint-vue src/renderer",
     "lint": "yarn run lint:template"
   },
@@ -42,9 +55,9 @@
     "electron": "1.x.x",
     "electron-builder": "20.x.x",
     "electron-devtools-installer": "2.x.x",
-    {{#unitTest}}
+    {{#if_or unitTest e2eTest}}
     "expect": "latest",
-    {{/unitTest}}
+    {{/if_or}}
     "file-loader": "latest",
     "html-webpack-plugin": "latest",
     {{#if_eq altCss "scss"}}
@@ -54,9 +67,11 @@
     {{#unitTest}}
     "jsdom": "latest",
     "jsdom-global": "latest",
+    {{/unitTest}}
+    {{#if_or unitTest e2eTest}}
     "mocha": "latest",
     "mocha-webpack": "latest",
-    {{/unitTest}}
+    {{/if_or}}
     "postcss": "6.x.x",
     "postcss-flexbugs-fixes": "latest",
     "postcss-loader": "latest",
@@ -64,6 +79,9 @@
     "pug-lint": "latest",
     "pug-lint-vue": "latest",
     "pug-loader": "latest",
+    {{#e2eTest}}
+    "spectron": "3.x.x",
+    {{/e2eTest}}
     {{#if_eq altCss "scss"}}
     "sass-loader": "latest",
     "sass-resources-loader": "latest",

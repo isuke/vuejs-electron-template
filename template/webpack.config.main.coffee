@@ -22,8 +22,10 @@ if process.env.NODE_ENV == 'production'
   config = merge mainConfig, {}
 else if process.env.NODE_ENV == 'development'
   config = merge mainConfig, {}
+{{#if_or unitTest e2eTest}}
 else if process.env.NODE_ENV == 'test'
   config = merge mainConfig, {}
+{{/if_or}}
 else
   console.error "`#{process.env.NODE_ENV}` is not defined."
 

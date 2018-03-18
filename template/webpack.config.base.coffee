@@ -2,9 +2,9 @@ fs            = require('fs')
 path          = require('path')
 webpack       = require('webpack')
 merge         = require('webpack-merge')
-{{#if unitTest}}
+{{#if_or unitTest e2eTest}}
 nodeExternals = require('webpack-node-externals')
-{{/if}}
+{{/if_or}}
 
 loader = {}
 loader.vuePre = [
@@ -20,7 +20,6 @@ loader.css    = [
   { loader: 'css-loader'    , options: sourceMap: true }
   { loader: 'postcss-loader', options: sourceMap: true }
 ]
-
 {{#if_eq altCss "scss"}}
 loader.scss = [
 {{/if_eq}}
@@ -144,12 +143,12 @@ if process.env.NODE_ENV == 'production'
     devtool: '#source-map'
 else if process.env.NODE_ENV == 'development'
   config = merge baseConfig, {}
-{{#if unitTest}}
+{{#if_or unitTest e2eTest}}
 else if process.env.NODE_ENV == 'test'
   config = merge baseConfig,
     externals: [nodeExternals()]
     devtool: 'inline-cheap-module-source-map'
-{{/if}}
+{{/if_or}}
 else
   console.error "`#{process.env.NODE_ENV}` is not defined."
 

@@ -41,12 +41,12 @@ module.exports = {
     }
   },
   helpers: {
-    'if_or': (val1, val2, opts) => {
+    'if_or': function(val1, val2, opts) {
       if (val1 || val2) {
         return opts.fn(this)
       }
     },
-    'if_and': (val1, val2, opts) => {
+    'if_and': function(val1, val2, opts) {
       if (val1 && val2) {
         return opts.fn(this)
       }

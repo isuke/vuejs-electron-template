@@ -22,14 +22,9 @@
     "pretest:e2e": "yarn run pack",
     "test:e2e": "cross-env NODE_ENV=test mocha-webpack --webpack-config=webpack.config.main.coffee --require=spec/e2e/setup.js spec/e2e/**/*.spec.coffee",
     {{/e2eTest}}
-    {{#unitTest}}
+    {{#if_or unitTest e2eTest}}
     "test": "{{#unitTest}}yarn run test:unit{{/unitTest}}{{#if_and unitTest e2eTest}} && {{/if_and}}{{#e2eTest}}yarn run test:e2e{{/e2eTest}}",
-    {{/unitTest}}
-    {{#e2eTest}}
-    {{#unless unitTest}}
-    "test": "{{#unitTest}}yarn run test:unit{{/unitTest}}{{#if_and unitTest e2eTest}} && {{/if_and}}{{#e2eTest}}yarn run test:e2e{{/e2eTest}}",
-    {{/unless}}
-    {{/e2eTest}}
+    {{/if_or}}
     "lint:template": "pug-lint-vue src/renderer",
     "lint": "yarn run lint:template"
   },

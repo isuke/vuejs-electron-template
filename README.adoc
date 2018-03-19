@@ -25,14 +25,41 @@ $ cd my-project
 $ yarn install
 ----
 
-== Develop
+== Usage
+
+=== Develop
 
 ----
 $ yarn run dev
 ----
 
-== Build
+=== Build
 
 ----
 $ yarn run build
 ----
+
+=== Test
+
+----
+$ yarn run test
+----
+
+== What's Included
+
+* vue.js
+* vue-router
+* lodash
+* axios
+* postCss
+** autoprefixer (option)
+** postcss-flexbugs-fixes (option)
+* altCss
+** scss (select)
+** stylus (select)
+* unit test (option)
+** @vue/test-utils
+** mocha
+** expect
+* e2e test (option)
+** spectron
